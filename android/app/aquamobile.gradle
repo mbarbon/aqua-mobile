@@ -5,6 +5,10 @@ project.ext.vectoricons = [
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 android {
+    defaultConfig {
+        manifestPlaceholders = [crashyliticsApiKey:AQUA_MOBILE_CRASHYLITICS_KEY]
+    }
+
     buildTypes {
         debug {
             resValue "string", "reactNativeCodePush_androidDeploymentKey", ""

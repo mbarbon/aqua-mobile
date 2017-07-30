@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import codePush from "react-native-code-push";
+import { Crashlytics } from 'react-native-fabric';
 import {
     aquaRecommendations,
     localState,
@@ -60,5 +61,11 @@ class aquamobile extends Component {
         });
     }
 }
+
+codePush.getUpdateMetadata(codePush.UpdateState.RUNNING).then((update) => {
+    if (update) {
+        Crashylitics.setString('CodePushRelease', update.label);
+    }
+});
 
 export default aquamobile = codePush(aquamobile);
