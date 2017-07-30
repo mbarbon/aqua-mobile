@@ -1,5 +1,4 @@
 - report metrics, failures, ...
-- codepush support
 
 - check cahing works as intended (both app-side and HTTP)
 - splash screen with some logo, or make initial screen load rapidly

@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.0.0-alpha.12",
     "react-native": "^0.46.4",
+    "react-native-code-push": "^4.1.0-beta",
     "react-native-shadow": "^1.2.1",
     "react-native-svg": "5.3.0",
     "react-native-tab-view": "0.0.66",

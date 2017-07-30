@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import codePush from "react-native-code-push";
 import {
     aquaRecommendations,
     localState,
@@ -7,7 +8,7 @@ import SplashScreen from './SplashScreen';
 import UserMode from './UserMode';
 import UserRecommendations from './UserRecommendations';
 
-export default class aquamobile extends Component {
+class aquamobile extends Component {
     constructor(props) {
         super(props);
 
@@ -59,3 +60,5 @@ export default class aquamobile extends Component {
         });
     }
 }
+
+export default aquamobile = codePush(aquamobile);

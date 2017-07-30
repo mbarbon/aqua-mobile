@@ -3,3 +3,17 @@ project.ext.vectoricons = [
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+android {
+    buildTypes {
+        debug {
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", ""
+        }
+        releaseStaging {
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", AQUA_MOBILE_CODE_PUSH_STAGING_KEY
+        }
+        release {
+            resValue "string", "reactNativeCodePush_androidDeploymentKey", AQUA_MOBILE_CODE_PUSH_PRODUCTION_KEY
+        }
+    }
+}
