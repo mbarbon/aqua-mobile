@@ -68,4 +68,4 @@ codePush.getUpdateMetadata(codePush.UpdateState.RUNNING).then((update) => {
     }
 });
 
-export default aquamobile = codePush(aquamobile);
+export default aquamobile = __DEV__ ? aquamobile : codePush(aquamobile);
