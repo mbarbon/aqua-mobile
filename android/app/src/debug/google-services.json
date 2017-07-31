@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "000000000000",
+    "firebase_url": "https://test-dummy-00000.firebaseio.com",
+    "project_id": "test-dummy-00000",
+    "storage_bucket": "test-dummy-00000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:ffffffffffffffff",
+        "android_client_info": {
+          "package_name": "org.barbon.aqua.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "test",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "test"
+        }
+      ],
+      "services": {
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

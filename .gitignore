@@ -51,3 +51,7 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
+# Don't commit the actual keys
+/android/app/src/release/google-services.json
+/android/app/src/releaseStaging/google-services.json

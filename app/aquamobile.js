@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import codePush from "react-native-code-push";
 import { Crashlytics } from 'react-native-fabric';
+import RNFirebase from 'react-native-firebase'
 import {
     aquaRecommendations,
     localState,
@@ -60,6 +61,14 @@ class aquamobile extends Component {
             userModeIsSet: aquaRecommendations.hasUserMode(),
         });
     }
+}
+
+const firebase = __DEV__ ? null : RNFirebase.initializeApp({
+    errorOnMissingPlayServices: false,
+    promptOnMissingPlayServices: false,
+});
+if (firebase) {
+    firebase.perf().setPerformanceCollectionEnabled(true);
 }
 
 codePush.getUpdateMetadata(codePush.UpdateState.RUNNING).then((update) => {
