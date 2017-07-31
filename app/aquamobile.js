@@ -63,8 +63,10 @@ class aquamobile extends Component {
 }
 
 codePush.getUpdateMetadata(codePush.UpdateState.RUNNING).then((update) => {
-    if (update) {
-        Crashylitics.setString('CodePushRelease', update.label);
+    if (update && update.label) {
+        Crashlytics.setString('CodePushRelease', 'codepush-' + update.label);
+    } else {
+        Crashlytics.setString('CodePushRelease', 'codepush-v0');
     }
 });
 
