@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import <CodePush/CodePush.h>
+#import <Firebase.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -25,6 +26,8 @@
 #else
     jsCodeLocation = [CodePush bundleURL];
 #endif
+
+  [FIRApp configure];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"aquamobile"

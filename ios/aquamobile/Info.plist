@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleDisplayName</key>
-    <string>aquamobile</string>
+    <string>Aqua Mobile</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -66,5 +66,19 @@
     </array>
     <key>CodePushDeploymentKey</key>
     <string></string>
+    <key>Fabric</key>
+    <dict>
+      <key>APIKey</key>
+      <string></string>
+      <key>Kits</key>
+      <array>
+        <dict>
+          <key>KitInfo</key>
+          <dict/>
+          <key>KitName</key>
+          <string>Crashlytics</string>
+        </dict>
+      </array>
+    </dict>
   </dict>
 </plist>
