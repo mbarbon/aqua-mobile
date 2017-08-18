@@ -14,6 +14,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.perf.RNFirebasePerformancePackage;
 
 import io.fabric.sdk.android.Fabric;
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
             new FabricPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new RNFirebasePackage(),
+            new RNFirebaseAnalyticsPackage(),
             new RNFirebasePerformancePackage(),
             new SvgPackage(),
             new VectorIconsPackage()

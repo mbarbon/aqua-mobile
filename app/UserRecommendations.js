@@ -17,6 +17,7 @@ import AnimeList from './AnimeList';
 import IconStrip from './IconStrip';
 import AnimeSearch from './AnimeSearch';
 import StatusBarPadding from './StatusBarPadding';
+import { analyticsSetCurrentScreen } from './Firebase'
 
 let filterDefinition = [
     {
@@ -112,6 +113,21 @@ export default class UserRecommendations extends PureComponent {
     }
 
     render() {
+        if (this.state.showSearchResults) {
+            analyticsSetCurrentScreen('search_results', 'UserRecommendations');
+        } else if (this.state.filteredRecommendations) {
+            let { index } = this.state.tabState;
+            if (index == 0) {
+                analyticsSetCurrentScreen('recommendations_complete', 'UserRecommendations');
+            } else if (index == 1) {
+                analyticsSetCurrentScreen('recommendations_airing', 'UserRecommendations');
+            } else if (index == 2) {
+                analyticsSetCurrentScreen('recommendations_user_list', 'UserRecommendations');
+            }
+        } else if (aquaRecommendations.isLocalUser()) {
+            analyticsSetCurrentScreen('empty_search', 'UserRecommendations');
+        }
+
         if (!this.state.filteredRecommendations && !aquaRecommendations.isLocalUser()) {
             return (
               <View style={styles.container}>

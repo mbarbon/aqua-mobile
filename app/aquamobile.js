@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import codePush from "react-native-code-push";
 import { Crashlytics } from 'react-native-fabric';
-import RNFirebase from 'react-native-firebase'
 import {
     aquaRecommendations,
     localState,
@@ -9,6 +8,7 @@ import {
 import SplashScreen from './SplashScreen';
 import UserMode from './UserMode';
 import UserRecommendations from './UserRecommendations';
+import { analyticsSetCurrentScreen } from './Firebase'
 
 class aquamobile extends Component {
     constructor(props) {
@@ -32,6 +32,7 @@ class aquamobile extends Component {
               <UserRecommendations />
             );
         } else {
+            analyticsSetCurrentScreen('initial_screen', 'UserMode');
             return (
               <UserMode />
             );
@@ -61,14 +62,6 @@ class aquamobile extends Component {
             userModeIsSet: aquaRecommendations.hasUserMode(),
         });
     }
-}
-
-const firebase = __DEV__ ? null : RNFirebase.initializeApp({
-    errorOnMissingPlayServices: false,
-    promptOnMissingPlayServices: false,
-});
-if (firebase) {
-    firebase.perf().setPerformanceCollectionEnabled(true);
 }
 
 codePush.getUpdateMetadata(codePush.UpdateState.RUNNING).then((update) => {

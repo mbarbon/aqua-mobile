@@ -13,6 +13,7 @@ import {
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import StarRating from './StarRating';
 import BestTouchable from './BestTouchable';
+import { analyticsLogEvent } from './Firebase'
 
 // XXX: shared
 var tagDescription = {
@@ -54,12 +55,22 @@ class AnimeListItem extends PureComponent {
         this.isUnmounted = true;
     }
 
+    goToSite() {
+        let item = this.props.item;
+
+        Linking.openURL(malURL(item));
+        analyticsLogEvent('mal_link', {
+            item_id: item.animedbId,
+            item_name: item.title,
+        });
+    }
+
     render() {
         let view = this._render();
 
         return (
           <BestTouchable
-            onPress={() => Linking.openURL(malURL(this.props.item))}
+            onPress={this.goToSite.bind(this)}
             background={BestTouchable.SelectableBackground()}
             underlayColor='#a9d6f5'
             >

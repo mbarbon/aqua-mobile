@@ -11,6 +11,7 @@ import {
     localState
 } from './Globals';
 import StatusBarPadding from './StatusBarPadding';
+import { analyticsLogEvent } from './Firebase'
 
 const logoScale = 0.60; /* XXX hardcoded */
 
@@ -81,6 +82,7 @@ export default class UserMode extends PureComponent {
     }
 
     setMALUsername() {
+        analyticsLogEvent('mal_user')
         localState.setMalUsernameAndLoadRecommendations(this.state.currentUsername);
     }
 

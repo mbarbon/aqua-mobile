@@ -12,7 +12,7 @@ target 'aquamobile' do
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 
   # pod 'Firebase/AdMob'
-  # pod 'Firebase/Analytics'
+  pod 'Firebase/Analytics'
   # pod 'Firebase/Auth'
   # pod 'Firebase/Crash'
   # pod 'Firebase/Database'

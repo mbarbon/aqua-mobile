@@ -8,6 +8,7 @@ import {
     localAnimeList,
 } from './Globals';
 import AnimeList from './AnimeList';
+import { analyticsLogEvent } from './Firebase'
 
 class HideableView extends Component {
     constructor(props) {
@@ -89,6 +90,7 @@ export default class AnimeSearch extends PureComponent {
     }
 
     updateRating(item, rating) {
+        analyticsLogEvent('added_anime')
         localAnimeList.addRating(item, rating)
             .then(this.resetSearch.bind(this))
             .catch((e) => console.error(e));
