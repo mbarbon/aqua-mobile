@@ -30,10 +30,10 @@ export default class UserMode extends PureComponent {
             <StatusBarPadding />
             <View style={{ backgroundColor: '#d9f4fb',
                            padding: 20 * logoScale }} >
-              {false &&
-                <Image source={require('./img/aqua-thumbsup.jpg')}
-                       style={{ width: 225 * logoScale,
-                                height: 225 * logoScale }}
+              {true &&
+                <Image source={require('./img/splash.png')}
+                       style={{ width: 225 * logoScale / 0.60,
+                                height: 225 * logoScale / 0.60 }}
                     />}
               <Text style={{fontSize: 160 * logoScale, color: '#484e98'}}>Aqua</Text>
               <Text style={{fontSize: 30 * logoScale, color: '#484e98'}}>Anime recommendations</Text>
