@@ -58,6 +58,8 @@ export default class AnimeSearch extends PureComponent {
             </HideableView>
             <TextInput
               ref='textInput'
+              marginLeft={15}
+              marginRight={15}
               placeholder='Search anime you liked'
               style={{ height: 40 } /* XXX hardcoded */}
               onChangeText={this.onTextChanged.bind(this)}

@@ -41,6 +41,8 @@ export default class UserMode extends PureComponent {
             <TextInput
               style={{ alignSelf: 'stretch',
                        margin: 5,
+                       marginLeft: 30,
+                       marginRight: 30,
                        height: 40 } /* XXX hardcoded */}
               autoCapitalize='none'
               placeholder='MAL username'

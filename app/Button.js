@@ -35,7 +35,9 @@ export default class Button extends PureComponent {
               padding={1} >
               <View
                 style={{ backgroundColor: background }}
-                padding={5}>
+                padding={5}
+                paddingLeft={20}
+                paddingRight={20}>
                 <Text style={{ color: text,
                                fontSize: 15 }}>
                   {this.props.title}

@@ -163,9 +163,9 @@ export default class UserRecommendations extends PureComponent {
                       onSearchResults={this.showSearchResults.bind(this)}
                      /> }
                   <IconStrip
-                    style={{ backgroundColor: '#484e98' }}
+                    style={{ backgroundColor: '#a9d6f5' }}
                     iconSettings={{ iconSize: 40,
-                                    color: '#a9d6f5',
+                                    color: '#484e98',
                                     underlayColor: '#d9f4fb' }}
                     popupItemSettings={{ underlayColor: '#a9d6f5',
                                          style: { fontSize: 20 } }}
