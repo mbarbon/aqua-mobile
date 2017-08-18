@@ -63,3 +63,7 @@ fastlane/screenshots
 # Visual Studio Code
 jsconfig.json
 .vscode
+
+# Generated icons
+/img/ios/
+/img/android/
