@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import {
-    Button,
     Image,
     StyleSheet,
     Text,
@@ -12,6 +11,7 @@ import {
 } from './Globals';
 import StatusBarPadding from './StatusBarPadding';
 import { analyticsLogEvent } from './Firebase'
+import Button from './Button'
 
 const logoScale = 0.60; /* XXX hardcoded */
 
