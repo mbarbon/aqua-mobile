@@ -35,8 +35,8 @@ export default class UserMode extends PureComponent {
                        style={{ width: 225 * logoScale / 0.60,
                                 height: 225 * logoScale / 0.60 }}
                     />}
-              <Text style={{fontSize: 160 * logoScale, color: '#484e98'}}>Aqua</Text>
-              <Text style={{fontSize: 30 * logoScale, color: '#484e98'}}>Anime recommendations</Text>
+              {false && <Text style={{fontSize: 160 * logoScale, color: '#484e98'}}>Aqua</Text>}
+              {false && <Text style={{fontSize: 30 * logoScale, color: '#484e98'}}>Anime recommendations</Text>}
             </View>
             <TextInput
               style={{ alignSelf: 'stretch',
