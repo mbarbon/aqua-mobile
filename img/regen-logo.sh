@@ -1,14 +1,16 @@
 #!/bin/sh
 
 cd $(dirname $0)
-mkdir -p ios android
+mkdir -p generated-icons
 
-for i in 80 180 120 167 152 512 1024; do
-    svgexport logo.svg ios/logo${i}.png $i:$i
-done
+npm install -g svgexport
+svgexport icon.svg generated-icons/icon-2048.png 2048:2048
+convert generated-icons/icon-2048.png generated-icons/icon-2048.png
 
-svgexport logo.svg android/mipmap-mdpi/ic_launcher.png 48:48
-svgexport logo.svg android/mipmap-hdpi/ic_launcher.png 72:72
-svgexport logo.svg android/mipmap-xhdpi/ic_launcher.png 96:96
-svgexport logo.svg android/mipmap-xxhdpi/ic_launcher.png 144:144
-svgexport logo.svg android/mipmap-xxxhdpi/ic_launcher.png 192:192
+./ios-icon-generator.sh generated-icons/icon-2048.png generated-icons
+
+for i in mdpi ldpi xhdpi xxhdpi xxxhdpi; do
+    cp generated-icons/android/Icon-${i}.png ../android/app/src/main/res/mipmap-${i}/ic_launcher.png
+fi
+
+exit 0

@@ -65,5 +65,4 @@ jsconfig.json
 .vscode
 
 # Generated icons
-/img/ios/
-/img/android/
+/img/generated-icons/
