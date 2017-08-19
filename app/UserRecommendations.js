@@ -140,7 +140,7 @@ export default class UserRecommendations extends PureComponent {
             return (
               <IconStrip.MenuContext>
                 <View style={{ flex: 1, flexDirection: 'column' }}>
-                  <StatusBarPadding />
+                  <StatusBarPadding backgroundColor='#a9d6f5' />
                   {this.state.filteredRecommendations &&
                      !this.state.showSearchResults &&
                     <TabViewAnimated

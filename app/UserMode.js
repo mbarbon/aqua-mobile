@@ -27,7 +27,7 @@ export default class UserMode extends PureComponent {
     render() {
         return (
           <View style={styles.container}>
-            <StatusBarPadding />
+            <StatusBarPadding backgroundColor='#ffffff' />
             <View style={{ backgroundColor: '#d9f4fb',
                            padding: 20 * logoScale }} >
               {true &&
