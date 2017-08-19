@@ -115,7 +115,7 @@ android {
         applicationId "org.barbon.aqua"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
+        versionCode 6
         versionName "0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
