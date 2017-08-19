@@ -35,11 +35,14 @@ class AnimeListItem extends PureComponent {
 
         this.isUnmounted = false;
         this.state = {
-            imgHeight: 0,
+            // cover loading size
+            imgWidth: 80,
+            imgHeight: 114,
         };
     }
 
     componentDidMount() {
+        Image.prefetch(this.props.item.image);
         Image.getSize(this.props.item.image, (width, height) => {
             if (this.isUnmounted)
                 return;
