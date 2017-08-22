@@ -30,34 +30,6 @@ function malURL(item) {
 }
 
 class AnimeListItem extends PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.isUnmounted = false;
-        this.state = {
-            // cover loading size
-            imgWidth: 80,
-            imgHeight: 114,
-        };
-    }
-
-    componentDidMount() {
-        Image.prefetch(this.props.item.image);
-        Image.getSize(this.props.item.image, (width, height) => {
-            if (this.isUnmounted)
-                return;
-            const ratio = width / height;
-
-            this.setState({
-                imgHeight: this.props.imgWidth / ratio
-            });
-        });
-    }
-
-    componentWillUnmount() {
-        this.isUnmounted = true;
-    }
-
     goToSite() {
         let item = this.props.item;
 
@@ -92,9 +64,9 @@ class AnimeListItem extends PureComponent {
                          height: 120,
                          padding: 5 }}>
             <Image
-              style={{ width: this.props.imgWidth,
-                       height: this.state.imgHeight,
-                       resizeMode: 'cover'}}
+              style={{ width: 80,
+                       height: 114,
+                       resizeMode: 'contain'}}
               source={{ uri: item.image }}
               defaultSource={require('./img/cover-loading.png')}
               />
