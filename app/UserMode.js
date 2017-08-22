@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
     Image,
+    KeyboardAvoidingView,
     StyleSheet,
     Text,
     TextInput,
@@ -26,7 +27,7 @@ export default class UserMode extends PureComponent {
 
     render() {
         return (
-          <View style={styles.container}>
+          <KeyboardAvoidingView style={styles.container} behavior='padding'>
             <StatusBarPadding backgroundColor='#ffffff' />
             <View style={{ backgroundColor: '#d9f4fb',
                            padding: 20 * logoScale }} >
@@ -64,7 +65,7 @@ export default class UserMode extends PureComponent {
               title="Add anime you liked"
               color='#fcd382'
               />
-          </View>
+          </KeyboardAvoidingView>
         );
     }
 

@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import {
+    KeyboardAvoidingView,
     TextInput,
     View,
 } from 'react-native';
@@ -48,7 +49,8 @@ export default class AnimeSearch extends PureComponent {
 
     render() {
         return (
-          <View
+          <KeyboardAvoidingView
+            behavior='padding'
             style={{ flex: this.props.style.flex,
                      flexDirection: 'column',
                      justifyContent: 'flex-end' }}>
@@ -64,7 +66,7 @@ export default class AnimeSearch extends PureComponent {
               style={{ height: 40 } /* XXX hardcoded */}
               onChangeText={this.onTextChanged.bind(this)}
               />
-          </View>
+          </KeyboardAvoidingView>
         );
     }
 
