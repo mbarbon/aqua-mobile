@@ -46,6 +46,9 @@ export default class UserMode extends PureComponent {
                        marginRight: 30,
                        height: 40 } /* XXX hardcoded */}
               autoCapitalize='none'
+              autoCorrect={false}
+              onSubmitEditing={this.setMALUsername.bind(this)}
+              returnKeyType='go'
               placeholder='MAL username'
               onChangeText={this.usernameChanged.bind(this)}
               />
