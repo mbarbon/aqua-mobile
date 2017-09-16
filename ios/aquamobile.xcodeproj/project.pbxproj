@@ -1650,6 +1650,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.barbon.aqua;
 				PRODUCT_NAME = "Aqua Mobile";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1682,6 +1683,7 @@
 				PRODUCT_NAME = "Aqua Mobile";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1901,6 +1903,7 @@
 				PRODUCT_NAME = "Aqua Mobile";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = releaseStaging;
