@@ -17,6 +17,8 @@ import BestTouchable from './BestTouchable';
 import DimensionsListener from './helpers/DimensionsListener';
 import { analyticsLogEvent } from './Firebase'
 
+const forScreenshot = false
+
 // XXX: shared
 var tagDescription = {
     'planned-and-franchise': 'Plan to watch & related',
@@ -82,7 +84,7 @@ class AnimeListItem extends PureComponent {
               style={{ width: 80,
                        height: 114,
                        resizeMode: 'contain'}}
-              source={{ uri: item.image }}
+              source={forScreenshot ? require('./img/cover-loading.png') : { uri: item.image }}
               defaultSource={require('./img/cover-loading.png')}
               />
             <View style={{flexDirection: 'column',
