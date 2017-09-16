@@ -4,6 +4,7 @@ import {
     Dimensions,
     FlatList,
     Image,
+    Keyboard,
     Linking,
     Platform,
     Text,
@@ -30,6 +31,16 @@ function malURL(item) {
 }
 
 class AnimeListItem extends PureComponent {
+    onRatingChanged (item, rating) {
+        Keyboard.dismiss()
+        this.props.onRatingChanged(item, rating)
+    }
+
+    onRatingRemoved (item) {
+        Keyboard.dismiss()
+        this.props.onRatingRemoved(item)
+    }
+
     goToSite() {
         let item = this.props.item;
 
@@ -93,14 +104,14 @@ class AnimeListItem extends PureComponent {
                    width={iconSize * 5}
                    height={iconSize}
                    rating={item.userRating || 0}
-                   onUpdateRating={this.props.onRatingChanged.bind(null, item)}
+                   onUpdateRating={this.onRatingChanged.bind(this, item)}
                    />}
               <View style={{ flex: 1 }} />
               {/* XXX hardcoded width/height, color */}
               {this.props.onRatingRemoved &&
                  <TouchableHighlight
                    style={{ marginRight: 20 }}
-                   onPress={this.props.onRatingRemoved.bind(null, item)}
+                   onPress={this.onRatingRemoved.bind(this, item)}
                    underlayColor='#fce782'
                    >
                    <MaterialIcon
@@ -125,6 +136,7 @@ export default class AnimeList extends PureComponent {
             initialNumToRender={5}
             maxToRenderPerBatch={2}
             windowSize={3}
+            keyboardShouldPersistTaps='handled'
             renderItem={({item}) =>
                 /* XXX hardcoded image width */
                 <AnimeListItem
