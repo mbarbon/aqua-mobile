@@ -14,6 +14,7 @@ import {
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import StarRating from './StarRating';
 import BestTouchable from './BestTouchable';
+import DimensionsListener from './helpers/DimensionsListener';
 import { analyticsLogEvent } from './Firebase'
 
 // XXX: shared
@@ -31,6 +32,8 @@ function malURL(item) {
 }
 
 class AnimeListItem extends PureComponent {
+    static minItemWidth = 300
+
     onRatingChanged (item, rating) {
         Keyboard.dismiss()
         this.props.onRatingChanged(item, rating)
@@ -66,12 +69,13 @@ class AnimeListItem extends PureComponent {
     }
 
     _render() {
-        let {width, height} = Dimensions.get('window');
         let item = this.props.item;
         let iconSize = 28;
 
         return (
           <View style={{ flexDirection: 'row',
+                         overflow: 'hidden',
+                         width: this.props.itemWidth,
                          height: 120,
                          padding: 5 }}>
             <Image
@@ -82,7 +86,7 @@ class AnimeListItem extends PureComponent {
               defaultSource={require('./img/cover-loading.png')}
               />
             <View style={{flexDirection: 'column',
-                        width: width - this.props.imgWidth - 5,
+                        width: this.props.itemWidth - this.props.imgWidth - 5,
                         paddingLeft: 5}}>
               <Text numberOfLines={1}>{item.title}</Text>
               <Text numberOfLines={1}>{item.genres}</Text>
@@ -96,7 +100,7 @@ class AnimeListItem extends PureComponent {
               <Text>{item.season}</Text>
               {item.tags && <Text>{tagDescription[item.tags]}</Text>}
               <View
-                style={{ flexDirection: 'row' }}
+                style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }}
                 >
               {/* XXX hardcoded width/height */}
               {this.props.onRatingChanged &&
@@ -106,7 +110,6 @@ class AnimeListItem extends PureComponent {
                    rating={item.userRating || 0}
                    onUpdateRating={this.onRatingChanged.bind(this, item)}
                    />}
-              <View style={{ flex: 1 }} />
               {/* XXX hardcoded width/height, color */}
               {this.props.onRatingRemoved &&
                  <TouchableHighlight
@@ -128,26 +131,40 @@ class AnimeListItem extends PureComponent {
 }
 
 export default class AnimeList extends PureComponent {
+    dimensionsChanged({ window: { width } }) {
+        this.setState({ windowWidth: width })
+    }
+
     render() {
+        let { width } = Dimensions.get('window')
+        let numColumns = Math.floor(width / AnimeListItem.minItemWidth)
+        let itemWidth = width / numColumns
+
         return (
-          <FlatList
-            style={this.props.style}
-            data={this.props.items}
-            initialNumToRender={5}
-            maxToRenderPerBatch={2}
-            windowSize={3}
-            keyboardShouldPersistTaps='handled'
-            renderItem={({item}) =>
-                /* XXX hardcoded image width */
-                <AnimeListItem
-                  imgWidth={80}
-                  item={item}
-                  onRatingChanged={this.props.onRatingChanged}
-                  onRatingRemoved={this.props.onRatingRemoved}
-                  />
-            }
-            keyExtractor={(item, index) => item.animedbId}
-            />
+          <View style={this.props.style}>
+              <DimensionsListener onChange={this.dimensionsChanged.bind(this)} />
+              <FlatList
+                style={this.props.style}
+                data={this.props.items}
+                key={'animeList-' + numColumns}
+                numColumns={numColumns}
+                initialNumToRender={5}
+                maxToRenderPerBatch={2}
+                windowSize={3}
+                keyboardShouldPersistTaps='handled'
+                renderItem={({item}) =>
+                    /* XXX hardcoded image width */
+                    <AnimeListItem
+                      imgWidth={80}
+                      itemWidth={itemWidth}
+                      item={item}
+                      onRatingChanged={this.props.onRatingChanged}
+                      onRatingRemoved={this.props.onRatingRemoved}
+                      />
+                }
+                keyExtractor={(item, index) => item.animedbId}
+                />
+            </View>
         );
     }
 }

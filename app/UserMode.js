@@ -40,10 +40,11 @@ export default class UserMode extends PureComponent {
               {false && <Text style={{fontSize: 30 * logoScale, color: '#484e98'}}>Anime recommendations</Text>}
             </View>
             <TextInput
-              style={{ alignSelf: 'stretch',
+              style={{ alignSelf: 'center',
                        margin: 5,
                        marginLeft: 30,
                        marginRight: 30,
+                       width: 225,
                        height: 40 } /* XXX hardcoded */}
               autoCapitalize='none'
               autoCorrect={false}

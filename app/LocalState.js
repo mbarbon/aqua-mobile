@@ -56,19 +56,25 @@ export default class LocalState {
                 else if (userMode !== 'mal' && userMode !== 'local')
                     throw 'Invalid user mode ' + userMode;
 
+                let loadLocal;
+                if (userMode === 'local') {
+                    loadLocal = this._loadLocalAnimeList();
+                }
+
                 if (now - recommendationRefresh < maxXyz) {
                     if (userMode === 'mal') {
                         aquaRecommendations.setMalUsername(username);
                     } else if (userMode === 'local') {
                         aquaRecommendations.setLocalUser();
                     }
-                    AsyncStorage.getItem(cachedRecommendationsKey)
+                    let cachedRecommendations = AsyncStorage.getItem(cachedRecommendationsKey)
                         .then(cachedRecommendationsString => {
                             aquaRecommendations.setCachedRecommendations(
                                 JSON.parse(cachedRecommendationsString),
                                 recommendationRefresh,
                             );
                         });
+                    return loadLocal ? Promise.all(loadLocal, cachedRecommendations) : cachedRecommendations
                 } else {
                     if (userMode === 'mal') {
                         return this._loadMalUsername();
