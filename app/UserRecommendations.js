@@ -1,10 +1,14 @@
 import React, { PureComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { TabViewAnimated, TabBar } from 'react-native-tab-view'
-import { aquaRecommendations, localAnimeList, localState } from './Globals'
-import IconStrip from './IconStrip'
-import StatusBarPadding from './StatusBarPadding'
-import { analyticsSetCurrentScreen } from './Firebase'
+import {
+  aquaRecommendations,
+  localAnimeList,
+  localState
+} from './state/Globals'
+import IconStrip from './components/IconStrip'
+import StatusBarPadding from './components/StatusBarPadding'
+import { analyticsSetCurrentScreen } from './helpers/Firebase'
 import AnimeList from './AnimeList'
 import AnimeSearch from './AnimeSearch'
 

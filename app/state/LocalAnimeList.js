@@ -1,5 +1,5 @@
 import { localState } from './Globals'
-import PubSub from './PubSub'
+import PubSub from '../helpers/PubSub'
 
 export default class LocalAnimeList {
   constructor () {

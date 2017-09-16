@@ -1,5 +1,5 @@
-import AquaRecommendations from './AquaRecommendations'
-import AquaAutocomplete from './AquaAutocomplete'
+import AquaRecommendations from '../backend/AquaRecommendations'
+import AquaAutocomplete from '../backend/AquaAutocomplete'
 import LocalAnimeList from './LocalAnimeList'
 import LocalState from './LocalState'
 

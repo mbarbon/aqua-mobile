@@ -1,5 +1,5 @@
 // XXX: shared
-import PubSub from './PubSub'
+import PubSub from '../helpers/PubSub'
 
 function fetchCompletions (term) {
   let encoded = encodeURIComponent(term)

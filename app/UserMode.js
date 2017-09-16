@@ -7,10 +7,10 @@ import {
   TextInput,
   View
 } from 'react-native'
-import { localState } from './Globals'
-import StatusBarPadding from './StatusBarPadding'
-import { analyticsLogEvent } from './Firebase'
-import Button from './Button'
+import { localState } from './state/Globals'
+import StatusBarPadding from './components/StatusBarPadding'
+import { analyticsLogEvent } from './helpers/Firebase'
+import Button from './components/Button'
 
 const logoScale = 0.6 /* XXX hardcoded */
 

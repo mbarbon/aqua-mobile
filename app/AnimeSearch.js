@@ -1,7 +1,7 @@
 import React, { Component, PureComponent } from 'react'
 import { KeyboardAvoidingView, TextInput, View } from 'react-native'
-import { aquaAutocomplete, localAnimeList } from './Globals'
-import { analyticsLogEvent } from './Firebase'
+import { aquaAutocomplete, localAnimeList } from './state/Globals'
+import { analyticsLogEvent } from './helpers/Firebase'
 import AnimeList from './AnimeList'
 
 class HideableView extends Component {

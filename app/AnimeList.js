@@ -12,10 +12,10 @@ import {
   View
 } from 'react-native'
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons'
-import StarRating from './StarRating'
-import BestTouchable from './BestTouchable'
+import StarRating from './components/StarRating'
+import BestTouchable from './components/BestTouchable'
 import DimensionsListener from './helpers/DimensionsListener'
-import { analyticsLogEvent } from './Firebase'
+import { analyticsLogEvent } from './helpers/Firebase'
 
 const forScreenshot = false
 
