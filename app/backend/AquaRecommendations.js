@@ -1,7 +1,10 @@
+// @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
+import type Anime from './types'
+import type Rating from './types'
 
-function fetchRatings (username) {
+function fetchRatings (username: string) {
   let headers = new Headers()
 
   headers.append('Cache-Control', 'max-age=' + 3600 * 4)
@@ -12,7 +15,11 @@ function fetchRatings (username) {
   }).then(response => response.json())
 }
 
-function fetchRatingsUntil (username, retries, delay) {
+function fetchRatingsUntil (
+  username: string,
+  retries: number,
+  delay: number
+): Promise<Array<Anime>> {
   let executor = function executor (resolve, reject, remainingRetries) {
     return fetchRatings(username)
       .then(maybeRatings => {
@@ -53,6 +60,14 @@ function fetchRecommendations (ratings) {
 }
 
 export default class AquaRecommendations {
+  malUsername: ?string
+  localUser: boolean
+  pubSub: {
+    userMode: PubSub,
+    recommendations: PubSub
+  }
+  recommendations: ?Array<Anime>
+
   constructor () {
     this.malUsername = null
     this.localUser = false
@@ -87,13 +102,13 @@ export default class AquaRecommendations {
     this.pubSub.userMode.notify()
   }
 
-  setMalUsername (username) {
+  setMalUsername (username: string) {
     this.malUsername = username
     this.localUser = false
     this.pubSub.userMode.notify()
   }
 
-  loadRecommendations (userMode, animeList) {
+  loadRecommendations (userMode: 'mal' | 'local', animeList: Rating) {
     if (userMode == 'mal') {
       return this.loadMalRecommendations(animeList)
     } else if (userMode == 'local') {
@@ -103,7 +118,7 @@ export default class AquaRecommendations {
     }
   }
 
-  loadMalAnimeList () {
+  loadMalAnimeList (): Promise<Array<Anime>> {
     if (this.malUsername == null) {
       throw new Error('Need an username when calling loadMalAnimeList')
     }
@@ -112,7 +127,7 @@ export default class AquaRecommendations {
     })
   }
 
-  loadMalRecommendations (animeList) {
+  loadMalRecommendations (animeList: Array<Rating>) {
     // XXX this should be included in the anime list
     let username = this.malUsername
     return fetchRecommendations(animeList)
@@ -127,13 +142,13 @@ export default class AquaRecommendations {
       })
   }
 
-  setLocalRatings (localRatings) {
+  setLocalRatings (localRatings: Array<Rating>) {
     if (!this.isLocalUser() || localRatings.length == 0) return
 
     return this.loadLocalRecommendations(localRatings)
   }
 
-  loadLocalRecommendations (animeList) {
+  loadLocalRecommendations (animeList: Array<Rating>) {
     fetchRecommendations(animeList)
       .then(recommendations => {
         this.recommendations = recommendations
@@ -146,7 +161,7 @@ export default class AquaRecommendations {
       })
   }
 
-  setCachedRecommendations (recommendations, cacheTime) {
+  setCachedRecommendations (recommendations: Array<Anime>, cacheTime: number) {
     this.recommendations = recommendations
     this.pubSub.recommendations.notify(recommendations, cacheTime)
   }

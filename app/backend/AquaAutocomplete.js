@@ -1,7 +1,9 @@
+// @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
+import type Anime from './types'
 
-function fetchCompletions (term) {
+function fetchCompletions (term: string) {
   let encoded = encodeURIComponent(term)
   let headers = new Headers()
 
@@ -14,13 +16,17 @@ function fetchCompletions (term) {
 }
 
 export default class AquaAutocomplete {
+  term: ?string
+  completions: ?Array<Anime>
+  pubSub: PubSub
+
   constructor () {
     this.term = null
     this.completions = null
     this.pubSub = new PubSub()
   }
 
-  setTerm (term) {
+  setTerm (term: string) {
     this.term = term
 
     fetchCompletions(term)
