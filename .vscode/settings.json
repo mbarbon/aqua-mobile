@@ -5,5 +5,6 @@
   "prettier.eslintIntegration": true,
 
   // for Flow
+  "flow.runOnEdit": true,
   "javascript.validate.enable": false
 }
