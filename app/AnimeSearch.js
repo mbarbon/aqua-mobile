@@ -52,6 +52,8 @@ export default class AnimeSearch extends PureComponent {
         <HideableView style={{ flex: 1 }} ref='hideableView' />
         <TextInput
           ref='textInput'
+          autoCapitalize='none'
+          autoCorrect={false}
           marginLeft={15}
           marginRight={15}
           placeholder='Search anime you liked'
