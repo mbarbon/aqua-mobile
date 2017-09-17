@@ -3,7 +3,7 @@
 import PubSub from '../helpers/PubSub'
 import type { Anime } from './types'
 
-function fetchCompletions (term: string) {
+function fetchCompletions (term: string): Promise<Array<Anime>> {
   let encoded = encodeURIComponent(term)
   let headers = new Headers()
 

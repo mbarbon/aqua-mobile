@@ -3,7 +3,10 @@
 import PubSub from '../helpers/PubSub'
 import type { Anime, Rating } from './types'
 
-function fetchRatings (username: string) {
+type ResolveRatings = (Array<Rating>) => void
+type RejectRatings = any => void
+
+function fetchRatings (username: string): Promise<Array<Rating>> {
   let headers = new Headers()
 
   headers.append('Cache-Control', 'max-age=' + 3600 * 4)
@@ -18,8 +21,12 @@ function fetchRatingsUntil (
   username: string,
   retries: number,
   delay: number
-): Promise<Array<Anime>> {
-  let executor = function executor (resolve, reject, remainingRetries) {
+): Promise<Array<Rating>> {
+  let executor = function executor (
+    resolve: ResolveRatings,
+    reject: RejectRatings,
+    remainingRetries: number
+  ) {
     return fetchRatings(username)
       .then(maybeRatings => {
         if ('queue-position' in maybeRatings) {
@@ -44,7 +51,7 @@ function fetchRatingsUntil (
   })
 }
 
-function fetchRecommendations (ratings) {
+function fetchRecommendations (ratings: Array<Rating>): Promise<Array<Anime>> {
   let headers = new Headers()
 
   headers.append('Content-Type', 'application/json')
@@ -107,7 +114,7 @@ export default class AquaRecommendations {
     this.pubSub.userMode.notify()
   }
 
-  loadRecommendations (userMode: 'mal' | 'local', animeList: Rating) {
+  loadRecommendations (userMode: 'mal' | 'local', animeList: Array<Rating>) {
     if (userMode == 'mal') {
       return this.loadMalRecommendations(animeList)
     } else if (userMode == 'local') {
@@ -126,7 +133,7 @@ export default class AquaRecommendations {
     })
   }
 
-  loadMalRecommendations (animeList: Array<Rating>) {
+  loadMalRecommendations (animeList: Array<Rating>): Promise<null> {
     // XXX this should be included in the anime list
     let username = this.malUsername
     return fetchRecommendations(animeList)
