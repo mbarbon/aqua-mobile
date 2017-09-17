@@ -7,6 +7,7 @@ const localAnimeListKey = '@Aqua:local:animeList'
 const malAnimeListKey = '@Aqua:mal:animeList'
 const cachedRecommendationsKey = '@Aqua:recommendations:cache'
 const cachedRecommendationsTimeKey = '@Aqua:recommendations:cacheTime'
+const cachedRecommendationsForKey = '@Aqua:recommendations:cacheFor'
 
 export default class LocalState {
   resetUserMode () {
@@ -50,12 +51,14 @@ export default class LocalState {
     return AsyncStorage.multiGet([
       userModeKey,
       malUsernameKey,
-      cachedRecommendationsTimeKey
+      cachedRecommendationsTimeKey,
+      cachedRecommendationsForKey
     ]).then(keys => {
       let now = Date.now() / 1000
       let userMode = keys[0][1]
       let username = keys[1][1]
       let recommendationRefresh = keys[2][1] ? parseInt(keys[2][1]) : 0
+      let recommendationMode = keys[3][1]
 
       if (userMode === null) return null
       else if (userMode !== 'mal' && userMode !== 'local')
@@ -66,7 +69,10 @@ export default class LocalState {
         loadLocal = this._loadLocalAnimeList()
       }
 
-      if (now - recommendationRefresh < maxXyz) {
+      if (
+        recommendationMode === userMode &&
+        now - recommendationRefresh < maxXyz
+      ) {
         if (userMode === 'mal') {
           aquaRecommendations.setMalUsername(username)
         } else if (userMode === 'local') {
@@ -77,7 +83,8 @@ export default class LocalState {
         ).then(cachedRecommendationsString => {
           aquaRecommendations.setCachedRecommendations(
             JSON.parse(cachedRecommendationsString),
-            recommendationRefresh
+            recommendationRefresh,
+            userMode
           )
         })
         return loadLocal
@@ -137,10 +144,11 @@ export default class LocalState {
     return AsyncStorage.setItem(malAnimeListKey, listString)
   }
 
-  setCachedRecommendations (recommendations, updateTime) {
+  setCachedRecommendations (recommendations, updateTime, userMode) {
     return AsyncStorage.multiSet([
       [cachedRecommendationsKey, JSON.stringify(recommendations)],
-      [cachedRecommendationsTimeKey, updateTime.toString()]
+      [cachedRecommendationsTimeKey, updateTime.toString()],
+      [cachedRecommendationsForKey, userMode]
     ])
   }
 }

@@ -315,7 +315,7 @@ export default class UserRecommendations extends PureComponent {
     return now - this.pendingRefresh.lastRefresh >= REFRESH_BUTTON_INTERVAL
   }
 
-  updateRecommendations (recommendations, refreshTime) {
+  updateRecommendations (recommendations, refreshTime, userMode) {
     this.pendingRefresh.lastRefresh = refreshTime
     this.setState(previous => {
       return {
@@ -329,7 +329,8 @@ export default class UserRecommendations extends PureComponent {
     localState
       .setCachedRecommendations(
         recommendations,
-        this.pendingRefresh.lastRefresh
+        this.pendingRefresh.lastRefresh,
+        userMode
       )
       .catch(error => {
         console.error(error)

@@ -1,7 +1,7 @@
 // @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
-import type { PubSub0, PubSub2 } from '../helpers/PubSub'
+import type { PubSub0, PubSub3 } from '../helpers/PubSub'
 import type { Anime, Rating } from './types'
 
 type ResolveRatings = (Array<Rating>) => void
@@ -71,7 +71,7 @@ export default class AquaRecommendations {
   localUser: boolean
   pubSub: {
     userMode: PubSub0,
-    recommendations: PubSub2<Array<Anime>, number>
+    recommendations: PubSub3<Array<Anime>, number, 'mal' | 'local'>
   }
   recommendations: ?Array<Anime>
 
@@ -142,7 +142,11 @@ export default class AquaRecommendations {
         this.recommendations = recommendations
         // avoid race condition
         if (this.malUsername === username)
-          this.pubSub.recommendations.notify(recommendations, Date.now() / 1000)
+          this.pubSub.recommendations.notify(
+            recommendations,
+            Date.now() / 1000,
+            'mal'
+          )
       })
       .catch(error => {
         console.error(error)
@@ -161,16 +165,24 @@ export default class AquaRecommendations {
         this.recommendations = recommendations
         // avoid race condition
         if (this.isLocalUser())
-          this.pubSub.recommendations.notify(recommendations, Date.now() / 1000)
+          this.pubSub.recommendations.notify(
+            recommendations,
+            Date.now() / 1000,
+            'local'
+          )
       })
       .catch(error => {
         console.error(error)
       })
   }
 
-  setCachedRecommendations (recommendations: Array<Anime>, cacheTime: number) {
+  setCachedRecommendations (
+    recommendations: Array<Anime>,
+    cacheTime: number,
+    userMode: 'mal' | 'local'
+  ) {
     this.recommendations = recommendations
-    this.pubSub.recommendations.notify(recommendations, cacheTime)
+    this.pubSub.recommendations.notify(recommendations, cacheTime, userMode)
   }
 
   getRecommendations () {

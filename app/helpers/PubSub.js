@@ -2,6 +2,7 @@
 type Receiver0 = () => void
 type Receiver1 = <V>(V) => void
 type Receiver2 = <V, U>(V, U) => void
+type Receiver3 = <V, U, T>(V, U, T) => void
 
 interface PubSub0 {
   subscribe(fnc: Receiver0): void,
@@ -19,6 +20,12 @@ interface PubSub2<V, U> {
   subscribe(fnc: Receiver2<V, U>): void,
   unsubscribe(fnc: Receiver2<V, U>): void,
   notify(V, U): void
+}
+
+interface PubSub3<V, U, T> {
+  subscribe(fnc: Receiver2<V, U, T>): void,
+  unsubscribe(fnc: Receiver2<V, U, T>): void,
+  notify(V, U, T): void
 }
 
 export default class PubSub {
@@ -47,4 +54,4 @@ export default class PubSub {
   }
 }
 
-export type { PubSub0, PubSub1, PubSub2 }
+export type { PubSub0, PubSub1, PubSub2, PubSub3 }
