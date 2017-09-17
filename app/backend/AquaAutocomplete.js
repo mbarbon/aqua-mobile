@@ -1,7 +1,7 @@
 // @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
-import type Anime from './types'
+import type { Anime } from './types'
 
 function fetchCompletions (term: string) {
   let encoded = encodeURIComponent(term)

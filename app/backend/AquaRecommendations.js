@@ -1,8 +1,7 @@
 // @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
-import type Anime from './types'
-import type Rating from './types'
+import type { Anime, Rating } from './types'
 
 function fetchRatings (username: string) {
   let headers = new Headers()

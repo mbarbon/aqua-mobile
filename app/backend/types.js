@@ -1,4 +1,5 @@
-export type Anime = {
+// @flow
+type Anime = {
   animedbId: number,
   title: string,
   image: string,
@@ -10,4 +11,6 @@ export type Anime = {
   status: number
 }
 
-export type Rating = [number, number, number]
+type Rating = [number, number, number]
+
+export type { Anime, Rating }
