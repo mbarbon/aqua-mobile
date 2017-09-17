@@ -372,9 +372,15 @@ export default class UserRecommendations extends PureComponent {
       let timerCallback = function () {
         this.pendingRefresh.timerId = null
         this.pendingRefresh.startPending = 0
-        if (requestUserMode === 'local')
-          aquaRecommendations.setLocalRatings(ratingList)
-        else aquaRecommendations.loadMalRecommendations(ratingList)
+        let promise
+        if (requestUserMode === 'local') {
+          promise = aquaRecommendations.setLocalRatings(ratingList)
+        } else {
+          promise = aquaRecommendations.loadMalRecommendations(ratingList)
+        }
+        if (promise) {
+          promise.catch(error => console.error(error))
+        }
       }.bind(this)
       if (startPending) {
         clearTimeout(timerId)
