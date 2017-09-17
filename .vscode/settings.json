@@ -1,9 +1,9 @@
 {
-    // For prettier
-    "editor.formatOnSave": true,
-    "javascript.format.enable": false,
-    "prettier.eslintIntegration": true,
+  // For prettier
+  "editor.formatOnSave": true,
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
 
-    // for Flow
-    "javascript.validate.enable": false
+  // for Flow
+  "javascript.validate.enable": false
 }
