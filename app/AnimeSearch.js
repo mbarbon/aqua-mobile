@@ -29,6 +29,7 @@ export default class AnimeSearch extends PureComponent {
     super(props)
 
     this.searchResultsCallback = this.searchResults.bind(this)
+    this.updateTimer = 0
   }
 
   componentDidMount () {
@@ -65,8 +66,14 @@ export default class AnimeSearch extends PureComponent {
   }
 
   onTextChanged (text) {
+    if (this.updateTimer) {
+      clearTimeout(this.updateTimer)
+    }
     if (text) {
-      aquaAutocomplete.setTerm(text)
+      this.updateTimer = setTimeout(() => {
+        this.updateTimer = 0
+        aquaAutocomplete.setTerm(text)
+      }, 500)
     } else {
       this.searchResults([])
     }
