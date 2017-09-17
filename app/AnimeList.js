@@ -93,7 +93,7 @@ class AnimeListItem extends PureComponent {
           source={
             forScreenshot
               ? require('./img/cover-loading.png')
-              : { uri: item.image }
+              : { uri: item.image, cache: 'default' }
           }
           defaultSource={require('./img/cover-loading.png')}
         />
