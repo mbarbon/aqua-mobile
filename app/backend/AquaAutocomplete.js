@@ -1,6 +1,7 @@
 // @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
+import type { PubSub1 } from '../helpers/PubSub'
 import type { Anime } from './types'
 
 function fetchCompletions (term: string): Promise<Array<Anime>> {
@@ -18,7 +19,7 @@ function fetchCompletions (term: string): Promise<Array<Anime>> {
 export default class AquaAutocomplete {
   term: ?string
   completions: ?Array<Anime>
-  pubSub: PubSub
+  pubSub: PubSub1<Array<Anime>>
 
   constructor () {
     this.term = null

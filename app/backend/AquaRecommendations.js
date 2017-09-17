@@ -1,6 +1,7 @@
 // @flow
 // XXX: shared
 import PubSub from '../helpers/PubSub'
+import type { PubSub0, PubSub2 } from '../helpers/PubSub'
 import type { Anime, Rating } from './types'
 
 type ResolveRatings = (Array<Rating>) => void
@@ -69,8 +70,8 @@ export default class AquaRecommendations {
   malUsername: ?string
   localUser: boolean
   pubSub: {
-    userMode: PubSub,
-    recommendations: PubSub
+    userMode: PubSub0,
+    recommendations: PubSub2<Array<Anime>, number>
   }
   recommendations: ?Array<Anime>
 
