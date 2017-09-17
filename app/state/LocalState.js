@@ -22,6 +22,13 @@ export default class LocalState {
     )
   }
 
+  setLocalUserAndLoadRecommendations () {
+    AsyncStorage.setItem(userModeKey, 'local').then(() => {
+      aquaRecommendations.setLocalUser()
+      return this._loadLocalAnimeList()
+    })
+  }
+
   setMalUsernameAndLoadRecommendations (username) {
     AsyncStorage.multiSet([
       [malUsernameKey, username],

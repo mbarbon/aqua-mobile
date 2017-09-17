@@ -109,7 +109,7 @@ export default class UserMode extends PureComponent {
   }
 
   setLocalUser () {
-    localState.setLocalUser()
+    localState.setLocalUserAndLoadRecommendations()
   }
 }
 
