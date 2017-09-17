@@ -14,6 +14,7 @@ import {
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons'
 import StarRating from './components/StarRating'
 import BestTouchable from './components/BestTouchable'
+import CrossfadingList from './components/CrossfadingList'
 import DimensionsListener from './helpers/DimensionsListener'
 import { analyticsLogEvent } from './helpers/Firebase'
 
@@ -161,7 +162,7 @@ export default class AnimeList extends PureComponent {
     return (
       <View style={this.props.style}>
         <DimensionsListener onChange={this.dimensionsChanged.bind(this)} />
-        <FlatList
+        <CrossfadingList
           style={this.props.style}
           data={this.props.items}
           key={'animeList-' + numColumns}
@@ -170,6 +171,7 @@ export default class AnimeList extends PureComponent {
           maxToRenderPerBatch={2}
           windowSize={3}
           keyboardShouldPersistTaps='handled'
+          fadeDuration={250}
           renderItem={({ item }) => (
             /* XXX hardcoded image width */
             <AnimeListItem
