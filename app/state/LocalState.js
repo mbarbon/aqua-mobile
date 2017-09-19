@@ -9,6 +9,10 @@ const cachedRecommendationsKey = '@Aqua:recommendations:cache'
 const cachedRecommendationsTimeKey = '@Aqua:recommendations:cacheTime'
 const cachedRecommendationsForKey = '@Aqua:recommendations:cacheFor'
 
+function removeObjectionableContent (animeList) {
+  return animeList.filter(anime => anime.animedbId !== 35288)
+}
+
 export default class LocalState {
   resetUserMode () {
     AsyncStorage.multiRemove([malUsernameKey, userModeKey]).then(() =>
@@ -117,7 +121,9 @@ export default class LocalState {
 
   _loadLocalAnimeList () {
     return AsyncStorage.getItem(localAnimeListKey).then(animeListString => {
-      let animeList = JSON.parse(animeListString) || []
+      let animeList = removeObjectionableContent(
+        JSON.parse(animeListString) || []
+      )
 
       // order is important here
       aquaRecommendations.setLocalUser()
@@ -137,7 +143,9 @@ export default class LocalState {
       let key = userMode === 'mal' ? malAnimeListKey : localAnimeListKey
 
       return AsyncStorage.getItem(key).then(
-        animeListString => JSON.parse(animeListString) || []
+        animeListString => removeObjectionableContent(
+          JSON.parse(animeListString) || []
+        )
       )
     } else if (userMode === null) {
       return Promise.resolve(null)
