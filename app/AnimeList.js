@@ -15,10 +15,9 @@ import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons
 import StarRating from './components/StarRating'
 import BestTouchable from './components/BestTouchable'
 import CrossfadingList from './components/CrossfadingList'
+import AnimeCover from './components/AnimeCover'
 import DimensionsListener from './helpers/DimensionsListener'
 import { analyticsLogEvent } from './helpers/Firebase'
-
-const forScreenshot = false
 
 // XXX: shared
 var tagDescription = {
@@ -85,19 +84,7 @@ class AnimeListItem extends PureComponent {
           padding: 5
         }}
       >
-        <Image
-          style={{
-            width: 80,
-            height: 114,
-            resizeMode: 'contain'
-          }}
-          source={
-            forScreenshot
-              ? require('./img/cover-loading.png')
-              : { uri: item.image, cache: 'default' }
-          }
-          defaultSource={require('./img/cover-loading.png')}
-        />
+        <AnimeCover uri={item.image} />
         <View
           style={{
             flexDirection: 'column',
