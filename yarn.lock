@@ -3803,9 +3803,9 @@ react-native-fabric@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/react-native-fabric/-/react-native-fabric-0.4.1.tgz#5fcb604daf17d0dff70603ff3eeba9e3f3160ddd"
 
-react-native-firebase@^2.0.5:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-2.2.0.tgz#2ff935db23e3b58ccc77fc62178eed484ad1eee1"
+react-native-firebase@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-2.2.1.tgz#7f22245eba951cce4b72e4653170d59004c9b561"
   dependencies:
     bows "^1.6.0"
     prop-types "^15.5.10"

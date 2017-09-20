@@ -2,22 +2,24 @@ PODS:
   - Crashlytics (3.8.5):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.12)
-  - Firebase/Core (4.0.4):
-    - FirebaseAnalytics (= 4.0.2)
-    - FirebaseCore (= 4.0.4)
-  - Firebase/Performance (4.0.4):
+  - Firebase/Analytics (4.2.0):
     - Firebase/Core
-    - FirebasePerformance (= 1.0.3)
-  - FirebaseAnalytics (4.0.2):
+  - Firebase/Core (4.2.0):
+    - FirebaseAnalytics (= 4.0.3)
+    - FirebaseCore (= 4.0.7)
+  - Firebase/Performance (4.2.0):
+    - Firebase/Core
+    - FirebasePerformance (= 1.0.5)
+  - FirebaseAnalytics (4.0.3):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (4.0.4):
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.7):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.0):
-    - FirebaseCore (~> 4.0)
-  - FirebasePerformance (1.0.3):
+  - FirebaseInstanceID (2.0.3)
+  - FirebasePerformance (1.0.5):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
@@ -35,7 +37,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Protobuf (3.3.0)
+  - Protobuf (3.4.0)
   - React (0.46.4):
     - React/Core (= 0.46.4)
   - React/ART (0.46.4):
@@ -52,11 +54,12 @@ PODS:
     - Crashlytics
     - Fabric
     - React
-  - RNFirebase (2.0.5):
+  - RNFirebase (2.2.1):
     - React
   - Yoga (0.46.4.React)
 
 DEPENDENCIES:
+  - Firebase/Analytics
   - Firebase/Core
   - Firebase/Performance
   - React/ART (from `../node_modules/react-native`)
@@ -79,20 +82,20 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
-  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
-  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
-  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
-  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
-  FirebasePerformance: 36bdb0500213b459ae991766801d5dc5399ff231
+  Firebase: 9548cae14d69718add12d75a5b312893f7ef89c7
+  FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
+  FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
+  FirebaseInstanceID: a4fc702b5a026f7322964376047f1a3f1f7cc6ff
+  FirebasePerformance: d0dc2a1d3dc1bca249d154cb40ee4eae25b455ad
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
+  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   React: 596d8774642d10fea20b1f24cc591fcf633f73ad
   ReactNativeFabric: b7d9763b3f8fd580ac208b2af84cca725f4922f4
-  RNFirebase: 82e7f17ad1423dde310c9b6c8906353858e5e962
+  RNFirebase: 69d2379c0268426b3be8d7359773196930974cef
   Yoga: 98e24da91afe33bb43fedaf27dafede269c04fe8
 
-PODFILE CHECKSUM: 93b380a035daee81016e869759ee3624461926e1
+PODFILE CHECKSUM: 1fc6f4f5f32d9ea693647789a4deb424637925ee
 
-COCOAPODS: 1.3.0
+COCOAPODS: 1.3.1

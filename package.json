@@ -15,7 +15,7 @@
     "react-native": "^0.46.4",
     "react-native-code-push": "^4.1.0-beta",
     "react-native-fabric": "^0.4.1",
-    "react-native-firebase": "^2.0.5",
+    "react-native-firebase": "^2.2.1",
     "react-native-shadow": "^1.2.1",
     "react-native-svg": "5.3.0",
     "react-native-tab-view": "0.0.66",
