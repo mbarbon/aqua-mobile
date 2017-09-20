@@ -337,14 +337,16 @@ export default class UserRecommendations extends PureComponent {
       })
   }
 
-  recommendFromLocalList (animeList) {
-    let ratingList = animeList.map(item => [
-      item.animedbId,
-      item.userStatus,
-      item.userRating
-    ])
+  recommendFromLocalList (animeList, dontReloadRecommendations) {
+    if (!dontReloadRecommendations) {
+      let ratingList = animeList.map(item => [
+        item.animedbId,
+        item.userStatus,
+        item.userRating
+      ])
+      this.eventuallyRequestRecommendations('local', ratingList)
+    }
 
-    this.eventuallyRequestRecommendations('local', ratingList)
     this.setState({
       localAnimeList: animeList
     })

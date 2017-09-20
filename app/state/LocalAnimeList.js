@@ -36,9 +36,9 @@ export default class LocalAnimeList {
     return Promise.reject('Item not found')
   }
 
-  setAnimeList (animeList) {
+  setAnimeList (animeList, dontReloadRecommendations) {
     this.animeList = animeList
-    this.pubSub.animeList.notify(animeList)
+    this.pubSub.animeList.notify(animeList, dontReloadRecommendations)
   }
 
   getAnimeList () {

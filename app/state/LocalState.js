@@ -29,7 +29,7 @@ export default class LocalState {
   setLocalUserAndLoadRecommendations () {
     AsyncStorage.setItem(userModeKey, 'local').then(() => {
       aquaRecommendations.setLocalUser()
-      return this._loadLocalAnimeList()
+      return this._loadLocalAnimeList(false)
     })
   }
 
@@ -75,19 +75,16 @@ export default class LocalState {
       else if (userMode !== 'mal' && userMode !== 'local')
         throw 'Invalid user mode ' + userMode
 
-      let loadLocal
-      if (userMode === 'local') {
-        loadLocal = this._loadLocalAnimeList()
-      }
-
       if (
         recommendationMode === userMode &&
         now - recommendationRefresh < maxXyz
       ) {
+        let loadLocal
         if (userMode === 'mal') {
           aquaRecommendations.setMalUsername(username)
         } else if (userMode === 'local') {
           aquaRecommendations.setLocalUser()
+          loadLocal = this._loadLocalAnimeList(true)
         }
         let cachedRecommendations = AsyncStorage.getItem(
           cachedRecommendationsKey
@@ -105,7 +102,7 @@ export default class LocalState {
         if (userMode === 'mal') {
           return this._loadMalUsername()
         } else if (userMode === 'local') {
-          return this._loadLocalAnimeList()
+          return this._loadLocalAnimeList(false)
         }
       }
     })
@@ -119,7 +116,7 @@ export default class LocalState {
     })
   }
 
-  _loadLocalAnimeList () {
+  _loadLocalAnimeList (dontReloadRecommendations) {
     return AsyncStorage.getItem(localAnimeListKey).then(animeListString => {
       let animeList = removeObjectionableContent(
         JSON.parse(animeListString) || []
@@ -127,7 +124,7 @@ export default class LocalState {
 
       // order is important here
       aquaRecommendations.setLocalUser()
-      localAnimeList.setAnimeList(animeList)
+      localAnimeList.setAnimeList(animeList, dontReloadRecommendations)
     })
   }
 
@@ -142,10 +139,8 @@ export default class LocalState {
     if (userMode === 'mal' || userMode === 'local') {
       let key = userMode === 'mal' ? malAnimeListKey : localAnimeListKey
 
-      return AsyncStorage.getItem(key).then(
-        animeListString => removeObjectionableContent(
-          JSON.parse(animeListString) || []
-        )
+      return AsyncStorage.getItem(key).then(animeListString =>
+        removeObjectionableContent(JSON.parse(animeListString) || [])
       )
     } else if (userMode === null) {
       return Promise.resolve(null)
