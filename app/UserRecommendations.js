@@ -12,7 +12,7 @@ import { analyticsSetCurrentScreen } from './helpers/Firebase'
 import AnimeList from './AnimeList'
 import AnimeSearch from './AnimeSearch'
 
-let filterDefinition = [
+let statusFilterDefinition = [
   {
     key: 'planned',
     description: 'plan to watch',
@@ -62,20 +62,21 @@ function filterRecommendations (recommendations, tagVisibility) {
   }
 }
 
-function tagVisibilityFromFilters (filterState) {
+function tagVisibilityFromFilters (statusFilterState) {
   return {
-    'planned-and-franchise': filterState[0] && filterState[1],
-    planned: filterState[0],
-    franchise: filterState[1],
-    'planned-franchise': filterState[2],
-    'same-franchise': filterState[1],
+    'planned-and-franchise': statusFilterState[0] && statusFilterState[1],
+    planned: statusFilterState[0],
+    franchise: statusFilterState[1],
+    'planned-franchise': statusFilterState[2],
+    'same-franchise': statusFilterState[1],
     null: true
   }
 }
 
-function filterLabel (index, filterState) {
-  return `${filterState[index] ? 'Hide' : 'Show'} "${filterDefinition[index]
-    .description}"`
+function statusFilterLabel (index, statusFilterState) {
+  return `${statusFilterState[index]
+    ? 'Hide'
+    : 'Show'} "${statusFilterDefinition[index].description}"`
 }
 
 export default class UserRecommendations extends PureComponent {
@@ -94,9 +95,9 @@ export default class UserRecommendations extends PureComponent {
       recommendations: null,
       filteredRecommendations: null,
       localAnimeList: localAnimeList.getAnimeList(),
-      filterState: filterDefinition.map(e => e.initialState),
+      statusFilterState: statusFilterDefinition.map(e => e.initialState),
       tagVisibility: tagVisibilityFromFilters(
-        filterDefinition.map(e => e.initialState)
+        statusFilterDefinition.map(e => e.initialState)
       ),
       showSearchResults: false,
       tabState: {
@@ -201,18 +202,21 @@ export default class UserRecommendations extends PureComponent {
     }
   }
 
+  renderStatusFilters () {
+    return [0, 1, 2].map(i => (
+      <IconStrip.PopupItem
+        key={'status.' + i}
+        onPress={this.toggleStatusFilterState.bind(this, i)}
+      >
+        {statusFilterLabel(i, this.state.statusFilterState)}
+      </IconStrip.PopupItem>
+    ))
+  }
+
   renderFilterMenu () {
     return (
       <IconStrip.PopupButton iconName='filter-list'>
-        <IconStrip.PopupItem onPress={this.toggleFilterState.bind(this, 0)}>
-          {filterLabel(0, this.state.filterState)}
-        </IconStrip.PopupItem>
-        <IconStrip.PopupItem onPress={this.toggleFilterState.bind(this, 1)}>
-          {filterLabel(1, this.state.filterState)}
-        </IconStrip.PopupItem>
-        <IconStrip.PopupItem onPress={this.toggleFilterState.bind(this, 2)}>
-          {filterLabel(2, this.state.filterState)}
-        </IconStrip.PopupItem>
+        {this.renderStatusFilters()}
       </IconStrip.PopupButton>
     )
   }
@@ -256,13 +260,13 @@ export default class UserRecommendations extends PureComponent {
     })
   }
 
-  toggleFilterState (index) {
+  toggleStatusFilterState (index) {
     this.setState(previous => {
-      let newFilters = previous.filterState.slice()
+      let newFilters = previous.statusFilterState.slice()
       newFilters[index] = !newFilters[index]
       let tagVisibility = tagVisibilityFromFilters(newFilters)
       return {
-        filterState: newFilters,
+        statusFilterState: newFilters,
         tagVisibiliity: tagVisibility,
         filteredRecommendations: filterRecommendations(
           previous.recommendations,
