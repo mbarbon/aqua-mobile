@@ -30,6 +30,39 @@ let statusFilterDefinition = [
   }
 ]
 
+let typeFilterDefinition = [
+  {
+    key: 1,
+    description: 'TV',
+    initialState: true
+  },
+  {
+    key: 2,
+    description: 'OVA',
+    initialState: true
+  },
+  {
+    key: 3,
+    description: 'Movie',
+    initialState: true
+  },
+  {
+    key: 4,
+    description: 'Special',
+    initialState: true
+  },
+  {
+    key: 5,
+    description: 'ONA',
+    initialState: true
+  },
+  {
+    key: 6,
+    description: 'Music',
+    initialState: false
+  }
+]
+
 let malRoutes = [
   { key: 'completed', title: 'Complete' },
   { key: 'airing', title: 'Airing' }
@@ -39,27 +72,49 @@ let localRoutes = malRoutes.concat([{ key: 'local', title: 'My list' }])
 
 const REFRESH_BUTTON_INTERVAL = 2 * 3600
 
-function filterRecommendationsArray (recommendations, tagVisibility) {
+function filterRecommendationsArray (
+  recommendations,
+  tagVisibility,
+  typeVisibility
+) {
   let filteredRecommendations = []
 
   for (let index in recommendations) {
-    if (tagVisibility[recommendations[index].tags])
-      filteredRecommendations.push(recommendations[index])
+    let recommendation = recommendations[index]
+    if (
+      tagVisibility[recommendation.tags] &&
+      (!recommendation.seriesType || typeVisibility[recommendation.seriesType])
+    ) {
+      filteredRecommendations.push(recommendation)
+    }
   }
 
   return filteredRecommendations
 }
 
-function filterRecommendations (recommendations, tagVisibility) {
+function filterRecommendations (recommendations, tagVisibility, typeVisibility) {
   if (recommendations === null) return null
 
   return {
     completed: filterRecommendationsArray(
       recommendations.completed,
-      tagVisibility
+      tagVisibility,
+      typeVisibilityFromFilters(typeVisibility)
     ),
-    airing: filterRecommendationsArray(recommendations.airing, tagVisibility)
+    airing: filterRecommendationsArray(
+      recommendations.airing,
+      tagVisibility,
+      typeVisibilityFromFilters(typeVisibility)
+    )
   }
+}
+
+function typeVisibilityFromFilters (typeFilterState) {
+  let result = {}
+  for (let i = 0; i < typeFilterDefinition.length; ++i) {
+    result[typeFilterDefinition[i].key] = typeFilterState[i]
+  }
+  return result
 }
 
 function tagVisibilityFromFilters (statusFilterState) {
@@ -79,6 +134,12 @@ function statusFilterLabel (index, statusFilterState) {
     : 'Show'} "${statusFilterDefinition[index].description}"`
 }
 
+function typeFilterLabel (index, typeFilterState) {
+  return `${typeFilterState[index] ? 'Hide' : 'Show'} "${typeFilterDefinition[
+    index
+  ].description}"`
+}
+
 export default class UserRecommendations extends PureComponent {
   constructor (props) {
     super(props)
@@ -96,6 +157,7 @@ export default class UserRecommendations extends PureComponent {
       filteredRecommendations: null,
       localAnimeList: localAnimeList.getAnimeList(),
       statusFilterState: statusFilterDefinition.map(e => e.initialState),
+      typeFilterState: typeFilterDefinition.map(e => e.initialState),
       tagVisibility: tagVisibilityFromFilters(
         statusFilterDefinition.map(e => e.initialState)
       ),
@@ -189,7 +251,7 @@ export default class UserRecommendations extends PureComponent {
                 disabled={!this.hasRecentUpdate()}
                 onPress={this.reloadRecommendations.bind(this)}
               />
-              {!aquaRecommendations.isLocalUser() && this.renderFilterMenu()}
+              {this.renderFilterMenu()}
               <IconStrip.PopupButton iconName='account-circle'>
                 <IconStrip.PopupItem onPress={this.changeUserMode.bind(this)}>
                   Change user
@@ -200,6 +262,17 @@ export default class UserRecommendations extends PureComponent {
         </IconStrip.MenuContext>
       )
     }
+  }
+
+  renderTypeFilters () {
+    return [0, 1, 2, 3, 4, 5].map(i => (
+      <IconStrip.PopupItem
+        key={'type.' + i}
+        onPress={this.toggleTypeFilterState.bind(this, i)}
+      >
+        {typeFilterLabel(i, this.state.typeFilterState)}
+      </IconStrip.PopupItem>
+    ))
   }
 
   renderStatusFilters () {
@@ -216,7 +289,9 @@ export default class UserRecommendations extends PureComponent {
   renderFilterMenu () {
     return (
       <IconStrip.PopupButton iconName='filter-list'>
-        {this.renderStatusFilters()}
+        {this.renderTypeFilters()}
+        {!aquaRecommendations.isLocalUser() && <IconStrip.Separator />}
+        {!aquaRecommendations.isLocalUser() && this.renderStatusFilters()}
       </IconStrip.PopupButton>
     )
   }
@@ -270,7 +345,23 @@ export default class UserRecommendations extends PureComponent {
         tagVisibiliity: tagVisibility,
         filteredRecommendations: filterRecommendations(
           previous.recommendations,
-          tagVisibility
+          tagVisibility,
+          previous.typeFilterState
+        )
+      }
+    })
+  }
+
+  toggleTypeFilterState (index) {
+    this.setState(previous => {
+      let newFilters = previous.typeFilterState.slice()
+      newFilters[index] = !newFilters[index]
+      return {
+        typeFilterState: newFilters,
+        filteredRecommendations: filterRecommendations(
+          previous.recommendations,
+          previous.tagVisibility,
+          newFilters
         )
       }
     })
@@ -326,7 +417,8 @@ export default class UserRecommendations extends PureComponent {
         recommendations: recommendations,
         filteredRecommendations: filterRecommendations(
           recommendations,
-          previous.tagVisibility
+          previous.tagVisibility,
+          previous.typeFilterState
         )
       }
     })
