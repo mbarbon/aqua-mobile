@@ -38,25 +38,25 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.4.0)
-  - React (0.46.4):
-    - React/Core (= 0.46.4)
-  - React/ART (0.46.4):
+  - React (0.49.3):
+    - React/Core (= 0.49.3)
+  - React/ART (0.49.3):
     - React/Core
-  - React/BatchedBridge (0.46.4):
+  - React/BatchedBridge (0.49.3):
     - React/Core
     - React/cxxreact_legacy
-  - React/Core (0.46.4):
-    - Yoga (= 0.46.4.React)
-  - React/cxxreact_legacy (0.46.4):
+  - React/Core (0.49.3):
+    - yoga (= 0.49.3.React)
+  - React/cxxreact_legacy (0.49.3):
     - React/jschelpers_legacy
-  - React/jschelpers_legacy (0.46.4)
+  - React/jschelpers_legacy (0.49.3)
   - ReactNativeFabric (0.4.1):
     - Crashlytics
     - Fabric
     - React
   - RNFirebase (2.2.1):
     - React
-  - Yoga (0.46.4.React)
+  - yoga (0.49.3.React)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -67,7 +67,7 @@ DEPENDENCIES:
   - React/Core (from `../node_modules/react-native`)
   - ReactNativeFabric (from `../node_modules/react-native-fabric`)
   - RNFirebase (from `../node_modules/react-native-firebase`)
-  - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
   React:
@@ -76,7 +76,7 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-fabric
   RNFirebase:
     :path: ../node_modules/react-native-firebase
-  Yoga:
+  yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
@@ -91,11 +91,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
-  React: 596d8774642d10fea20b1f24cc591fcf633f73ad
+  React: 5751f5630c58f7ef31a00cf03044878295bceff0
   ReactNativeFabric: b7d9763b3f8fd580ac208b2af84cca725f4922f4
   RNFirebase: 69d2379c0268426b3be8d7359773196930974cef
-  Yoga: 98e24da91afe33bb43fedaf27dafede269c04fe8
+  yoga: 6e56575501ecea04196f9c9f08b90cf97cd5da24
 
-PODFILE CHECKSUM: 1fc6f4f5f32d9ea693647789a4deb424637925ee
+PODFILE CHECKSUM: b77de136060b586ca51d52b2469986ab92bc3d85
 
 COCOAPODS: 1.3.1
