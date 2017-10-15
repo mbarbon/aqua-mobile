@@ -17,7 +17,7 @@
     "react-native-fabric": "^0.4.1",
     "react-native-firebase": "^2.2.1",
     "react-native-shadow": "^1.2.1",
-    "react-native-svg": "5.3.0",
+    "react-native-svg": "5.4.1",
     "react-native-tab-view": "0.0.66",
     "react-native-vector-icons": "^4.2.0"
   },
