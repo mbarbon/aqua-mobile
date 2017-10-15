@@ -8,12 +8,17 @@ const malAnimeListKey = '@Aqua:mal:animeList'
 const cachedRecommendationsKey = '@Aqua:recommendations:cache'
 const cachedRecommendationsTimeKey = '@Aqua:recommendations:cacheTime'
 const cachedRecommendationsForKey = '@Aqua:recommendations:cacheFor'
+const filterStateKey = '@Aqua:recommendationFilters'
 
 function removeObjectionableContent (animeList) {
   return animeList.filter(anime => anime.animedbId !== 35288)
 }
 
 export default class LocalState {
+  constructor () {
+    this.currentFilterState = {}
+  }
+
   resetUserMode () {
     AsyncStorage.multiRemove([malUsernameKey, userModeKey]).then(() =>
       aquaRecommendations.clearMalUsername()
@@ -63,13 +68,19 @@ export default class LocalState {
       userModeKey,
       malUsernameKey,
       cachedRecommendationsTimeKey,
-      cachedRecommendationsForKey
+      cachedRecommendationsForKey,
+      filterStateKey
     ]).then(keys => {
       let now = Date.now() / 1000
       let userMode = keys[0][1]
       let username = keys[1][1]
       let recommendationRefresh = keys[2][1] ? parseInt(keys[2][1]) : 0
       let recommendationMode = keys[3][1]
+      let filterState = keys[4][1]
+
+      if (filterState) {
+        this.currentFilterState = JSON.parse(filterState)
+      }
 
       if (userMode === null) return null
       else if (userMode !== 'mal' && userMode !== 'local')
@@ -160,5 +171,15 @@ export default class LocalState {
       [cachedRecommendationsTimeKey, updateTime.toString()],
       [cachedRecommendationsForKey, userMode]
     ])
+  }
+
+  setRecommendationFilterState (filterState) {
+    let jsonString = JSON.stringify(filterState)
+    this.currentFilterState = JSON.parse(jsonString)
+    return AsyncStorage.setItem(filterStateKey, jsonString)
+  }
+
+  getRecommendationFilterState () {
+    return this.currentFilterState
   }
 }

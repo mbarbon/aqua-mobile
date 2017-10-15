@@ -152,15 +152,23 @@ export default class UserRecommendations extends PureComponent {
       startPending: 0,
       userMode: null
     }
+    let {
+      typeFilterState,
+      statusFilterState
+    } = localState.getRecommendationFilterState()
+    if (!statusFilterState) {
+      statusFilterState = statusFilterDefinition.map(e => e.initialState)
+    }
+    if (!typeFilterState) {
+      typeFilterState = typeFilterDefinition.map(e => e.initialState)
+    }
     this.state = {
       recommendations: null,
       filteredRecommendations: null,
       localAnimeList: localAnimeList.getAnimeList(),
-      statusFilterState: statusFilterDefinition.map(e => e.initialState),
-      typeFilterState: typeFilterDefinition.map(e => e.initialState),
-      tagVisibility: tagVisibilityFromFilters(
-        statusFilterDefinition.map(e => e.initialState)
-      ),
+      statusFilterState,
+      typeFilterState,
+      tagVisibility: tagVisibilityFromFilters(statusFilterState),
       showSearchResults: false,
       tabState: {
         index: 0,
@@ -335,6 +343,13 @@ export default class UserRecommendations extends PureComponent {
     })
   }
 
+  updateStoredFilters () {
+    localState.setRecommendationFilterState({
+      statusFilterState: this.state.statusFilterState,
+      typeFilterState: this.state.typeFilterState
+    })
+  }
+
   toggleStatusFilterState (index) {
     this.setState(previous => {
       let newFilters = previous.statusFilterState.slice()
@@ -349,7 +364,7 @@ export default class UserRecommendations extends PureComponent {
           previous.typeFilterState
         )
       }
-    })
+    }, this.updateStoredFilters.bind(this))
   }
 
   toggleTypeFilterState (index) {
@@ -364,7 +379,7 @@ export default class UserRecommendations extends PureComponent {
           newFilters
         )
       }
-    })
+    }, this.updateStoredFilters.bind(this))
   }
 
   changeUserMode () {
