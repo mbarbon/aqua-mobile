@@ -21,6 +21,18 @@ function showMenu (position, children) {
   activeMenuContexts[0].showMenu(position, children)
 }
 
+class Separator extends PureComponent {
+  render () {
+    return (
+      <View
+        style={{
+          borderBottomWidth: StyleSheet.hairlineWidth
+        }}
+      />
+    )
+  }
+}
+
 class MaybeBoxShadow extends PureComponent {
   constructor (props) {
     super(props)
@@ -467,6 +479,7 @@ function mergeStyle () {
   return merged
 }
 
+IconStrip.Separator = Separator
 IconStrip.PushButton = IconPushButton
 IconStrip.PopupButton = IconPopupButton
 IconStrip.PopupItem = IconPopupItem
