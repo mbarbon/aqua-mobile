@@ -250,6 +250,7 @@ class IconStripMenuContext extends Component {
       let clickableChildren = React.Children.map(
         this.state.menuProps.children,
         child =>
+          child &&
           React.cloneElement(child, {
             style: mergeStyle(
               defaultStyles.popupItemStyle,
