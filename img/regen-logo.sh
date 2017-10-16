@@ -9,7 +9,7 @@ convert generated-icons/icon-2048.png generated-icons/icon-2048.png
 
 ./ios-icon-generator.sh generated-icons/icon-2048.png generated-icons
 
-for i in mdpi ldpi xhdpi xxhdpi xxxhdpi; do
+for i in mdpi xhdpi xxhdpi xxxhdpi; do
     cp generated-icons/android/Icon-${i}.png ../android/app/src/main/res/mipmap-${i}/ic_launcher.png
 fi
 

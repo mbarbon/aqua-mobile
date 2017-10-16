@@ -87,6 +87,9 @@ convert "$SRC_FILE" -resize 512x512 "$DST_PATH/ios/iTunesArtwork.png"
 info 'Generate iTunesArtwork@2x.png ...'
 convert "$SRC_FILE" -resize 1024x1024 "$DST_PATH/ios/iTunesArtwork@2x.png"
 
+info 'Generate iOS-marketing.png ...'
+convert "$SRC_FILE" -resize 1024x1024 -alpha off "$DST_PATH/ios/iOS-marketing.png"
+
 info 'Generate ios Icon-20.png ...'
 convert "$SRC_FILE" -resize 20x20 "$DST_PATH/ios/Icon-20.png"
 info 'Generate ios Icon-20@2x.png ...'
