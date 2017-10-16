@@ -11,6 +11,6 @@ convert generated-icons/icon-2048.png generated-icons/icon-2048.png
 
 for i in mdpi xhdpi xxhdpi xxxhdpi; do
     cp generated-icons/android/Icon-${i}.png ../android/app/src/main/res/mipmap-${i}/ic_launcher.png
-fi
+done
 
 exit 0
