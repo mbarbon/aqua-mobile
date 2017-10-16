@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "16.0.0-beta.5",
     "react-native": "0.49.3",
-    "react-native-code-push": "^4.1.0-beta",
+    "react-native-code-push": "5.1.2-beta",
     "react-native-fabric": "^0.4.1",
     "react-native-firebase": "^2.2.1",
     "react-native-shadow": "^1.2.1",

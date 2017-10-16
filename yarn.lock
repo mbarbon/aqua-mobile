@@ -3880,9 +3880,9 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-code-push@^4.1.0-beta:
-  version "4.1.0-beta"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-4.1.0-beta.tgz#2692c62a7b93a639fc57c1dd9a3502fa6d497952"
+react-native-code-push@5.1.2-beta:
+  version "5.1.2-beta"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.1.2-beta.tgz#56b67e882c117d75051e4039785eb44e10cb251a"
   dependencies:
     code-push "1.11.2-beta"
     glob "^5.0.15"
