@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, Platform } from 'react-native'
 import { aquaRecommendations, localAnimeList } from './Globals'
 
 const malUsernameKey = '@Aqua:mal:username'
@@ -10,8 +10,16 @@ const cachedRecommendationsTimeKey = '@Aqua:recommendations:cacheTime'
 const cachedRecommendationsForKey = '@Aqua:recommendations:cacheFor'
 const filterStateKey = '@Aqua:recommendationFilters'
 
+let objectionable =
+  Platform.OS === 'ios'
+    ? {
+        '1853': true,
+        '35288': true
+      }
+    : {}
+
 function removeObjectionableContent (animeList) {
-  return animeList.filter(anime => anime.animedbId !== 35288)
+  return animeList.filter(anime => !objectionable[anime.animedbId])
 }
 
 export default class LocalState {

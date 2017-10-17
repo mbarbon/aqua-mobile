@@ -1,8 +1,21 @@
 // @flow
 // XXX: shared
+import { Platform } from 'react-native'
 import PubSub from '../helpers/PubSub'
 import type { PubSub1 } from '../helpers/PubSub'
 import type { Anime } from './types'
+
+let objectionable =
+  Platform.OS === 'ios'
+    ? {
+        '1853': true,
+        '35288': true
+      }
+    : {}
+
+function filterObjectionableContent (anime) {
+  return anime.filter(a => !objectionable[a.animedbId])
+}
 
 function fetchCompletions (term: string): Promise<Array<Anime>> {
   let encoded = encodeURIComponent(term)
@@ -32,8 +45,8 @@ export default class AquaAutocomplete {
 
     fetchCompletions(term)
       .then(completions => {
-        this.completions = completions
-        this.pubSub.notify(completions)
+        this.completions = filterObjectionableContent(completions)
+        this.pubSub.notify(this.completions)
       })
       .catch(error => {
         console.error(error)
