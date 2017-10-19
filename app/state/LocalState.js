@@ -154,20 +154,6 @@ export default class LocalState {
     )
   }
 
-  getCurrentAnimeList (userMode) {
-    if (userMode === 'mal' || userMode === 'local') {
-      let key = userMode === 'mal' ? malAnimeListKey : localAnimeListKey
-
-      return AsyncStorage.getItem(key).then(animeListString =>
-        removeObjectionableContent(JSON.parse(animeListString) || [])
-      )
-    } else if (userMode === null) {
-      return Promise.resolve(null)
-    } else {
-      throw 'Invalid user mode ' + userMode
-    }
-  }
-
   setMalAnimeList (animeList) {
     let listString = JSON.stringify(animeList)
     return AsyncStorage.setItem(malAnimeListKey, listString)
