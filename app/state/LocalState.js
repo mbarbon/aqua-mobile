@@ -103,7 +103,7 @@ export default class LocalState {
           aquaRecommendations.setMalUsername(username)
         } else if (userMode === 'local') {
           aquaRecommendations.setLocalUser()
-          loadLocal = this._loadLocalAnimeList(true)
+          loadLocal = this._loadLocalAnimeList()
         }
         let cachedRecommendations = AsyncStorage.getItem(
           cachedRecommendationsKey
@@ -121,7 +121,7 @@ export default class LocalState {
         if (userMode === 'mal') {
           return this._loadMalUsername()
         } else if (userMode === 'local') {
-          return this._loadLocalAnimeList(false)
+          return this._loadLocalAnimeList(true)
         }
       }
     })
@@ -135,7 +135,7 @@ export default class LocalState {
     })
   }
 
-  _loadLocalAnimeList (dontReloadRecommendations) {
+  _loadLocalAnimeList (reloadRecommendations) {
     return AsyncStorage.getItem(localAnimeListKey).then(animeListString => {
       let animeList = removeObjectionableContent(
         JSON.parse(animeListString) || []
@@ -143,7 +143,7 @@ export default class LocalState {
 
       // order is important here
       aquaRecommendations.setLocalUser()
-      localAnimeList.setAnimeList(animeList, dontReloadRecommendations)
+      localAnimeList.setAnimeList(animeList, reloadRecommendations)
     })
   }
 

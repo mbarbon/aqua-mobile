@@ -448,8 +448,8 @@ export default class UserRecommendations extends PureComponent {
       })
   }
 
-  recommendFromLocalList (animeList, dontReloadRecommendations) {
-    if (!dontReloadRecommendations) {
+  recommendFromLocalList (animeList, reloadRecommendations) {
+    if (reloadRecommendations) {
       let ratingList = animeList.map(item => [
         item.animedbId,
         item.userStatus,
