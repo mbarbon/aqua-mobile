@@ -155,7 +155,7 @@ export default class LocalState {
   }
 
   setMalAnimeList (animeList) {
-    let listString = JSON && JSON.stringify(animeList)
+    let listString = JSON.stringify(animeList)
     return AsyncStorage.setItem(malAnimeListKey, listString)
   }
 
