@@ -75,15 +75,19 @@ const REFRESH_BUTTON_INTERVAL = 2 * 3600
 function filterRecommendationsArray (
   recommendations,
   tagVisibility,
-  typeVisibility
+  typeVisibility,
+  localAnimeList
 ) {
   let filteredRecommendations = []
+  let localAnimeSet = new Set((localAnimeList || []).map(a => a.animedbId))
 
   for (let index in recommendations) {
     let recommendation = recommendations[index]
     if (
       tagVisibility[recommendation.tags] &&
-      (!recommendation.seriesType || typeVisibility[recommendation.seriesType])
+      (!recommendation.seriesType ||
+        typeVisibility[recommendation.seriesType]) &&
+      !localAnimeSet.has(recommendation.animedbId)
     ) {
       filteredRecommendations.push(recommendation)
     }
@@ -92,19 +96,26 @@ function filterRecommendationsArray (
   return filteredRecommendations
 }
 
-function filterRecommendations (recommendations, tagVisibility, typeVisibility) {
+function filterRecommendations (
+  recommendations,
+  tagVisibility,
+  typeVisibility,
+  localAnimeList
+) {
   if (recommendations === null) return null
 
   return {
     completed: filterRecommendationsArray(
       recommendations.completed,
       tagVisibility,
-      typeVisibilityFromFilters(typeVisibility)
+      typeVisibilityFromFilters(typeVisibility),
+      localAnimeList
     ),
     airing: filterRecommendationsArray(
       recommendations.airing,
       tagVisibility,
-      typeVisibilityFromFilters(typeVisibility)
+      typeVisibilityFromFilters(typeVisibility),
+      localAnimeList
     )
   }
 }
@@ -165,7 +176,8 @@ export default class UserRecommendations extends PureComponent {
     this.state = {
       recommendations: null,
       filteredRecommendations: null,
-      localAnimeList: localAnimeList.getAnimeList(),
+      localAnimeList: null,
+      localAnimeListChanged: false,
       statusFilterState,
       typeFilterState,
       tagVisibility: tagVisibilityFromFilters(statusFilterState),
@@ -361,7 +373,8 @@ export default class UserRecommendations extends PureComponent {
         filteredRecommendations: filterRecommendations(
           previous.recommendations,
           tagVisibility,
-          previous.typeFilterState
+          previous.typeFilterState,
+          previous.localAnimeList
         )
       }
     }, this.updateStoredFilters.bind(this))
@@ -376,7 +389,8 @@ export default class UserRecommendations extends PureComponent {
         filteredRecommendations: filterRecommendations(
           previous.recommendations,
           previous.tagVisibility,
-          newFilters
+          newFilters,
+          previous.localAnimeList
         )
       }
     }, this.updateStoredFilters.bind(this))
@@ -417,6 +431,9 @@ export default class UserRecommendations extends PureComponent {
   }
 
   hasRecentUpdate () {
+    if (this.state.localAnimeListChanged) {
+      return false
+    }
     let now = Date.now() / 1000
     return now - this.pendingRefresh.lastRefresh < REFRESH_BUTTON_INTERVAL
   }
@@ -429,8 +446,10 @@ export default class UserRecommendations extends PureComponent {
         filteredRecommendations: filterRecommendations(
           recommendations,
           previous.tagVisibility,
-          previous.typeFilterState
-        )
+          previous.typeFilterState,
+          previous.localAnimeList
+        ),
+        localAnimeListChanged: false
       }
     })
     localState
@@ -454,8 +473,17 @@ export default class UserRecommendations extends PureComponent {
       this.eventuallyRequestRecommendations('local', ratingList)
     }
 
-    this.setState({
-      localAnimeList: animeList
+    this.setState(previous => {
+      return {
+        filteredRecommendations: filterRecommendations(
+          previous.recommendations,
+          previous.tagVisibility,
+          previous.typeFilterState,
+          animeList
+        ),
+        localAnimeList: animeList,
+        localAnimeListChanged: previous.localAnimeList != null
+      }
     })
   }
 
