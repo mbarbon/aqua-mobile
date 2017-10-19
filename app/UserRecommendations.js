@@ -256,7 +256,7 @@ export default class UserRecommendations extends PureComponent {
             >
               <IconStrip.PushButton
                 iconName='refresh'
-                disabled={!this.hasRecentUpdate()}
+                disabled={this.hasRecentUpdate()}
                 onPress={this.reloadRecommendations.bind(this)}
               />
               {this.renderFilterMenu()}
@@ -418,7 +418,7 @@ export default class UserRecommendations extends PureComponent {
 
   hasRecentUpdate () {
     let now = Date.now() / 1000
-    return now - this.pendingRefresh.lastRefresh >= REFRESH_BUTTON_INTERVAL
+    return now - this.pendingRefresh.lastRefresh < REFRESH_BUTTON_INTERVAL
   }
 
   updateRecommendations (recommendations, refreshTime, userMode) {
