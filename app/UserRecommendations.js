@@ -413,11 +413,7 @@ export default class UserRecommendations extends PureComponent {
   }
 
   reloadRecommendations () {
-    let userMode = aquaRecommendations.getUserMode()
-
-    localState
-      .getCurrentAnimeList(userMode)
-      .then(this.eventuallyRequestRecommendations.bind(this, userMode))
+    this.recommendFromLocalList(this.state.localAnimeList, true)
   }
 
   hasRecentUpdate () {
