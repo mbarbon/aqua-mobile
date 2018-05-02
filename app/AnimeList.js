@@ -19,6 +19,12 @@ import AnimeCover from './components/AnimeCover'
 import DimensionsListener from './helpers/DimensionsListener'
 import { analyticsLogEvent } from './helpers/Firebase'
 
+function toAbsoluteURI (image: string) {
+  return image && image[0] === '/'
+    ? 'https://aqua-recommend.net' + image
+    : image
+}
+
 // XXX: shared
 var tagDescription = {
   'planned-and-franchise': 'Plan to watch & related',
@@ -84,7 +90,7 @@ class AnimeListItem extends PureComponent {
           padding: 5
         }}
       >
-        <AnimeCover uri={item.image} />
+        <AnimeCover uri={toAbsoluteURI(item.image)} />
         <View
           style={{
             flexDirection: 'column',
