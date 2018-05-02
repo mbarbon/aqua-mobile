@@ -69,6 +69,12 @@ export default class LocalState {
       .then(
         aquaRecommendations.loadMalRecommendations.bind(aquaRecommendations)
       )
+      .catch(error => {
+        // assumes there was a typo in the MAL user name and backs off
+        if (error.constructor.retriesExceeded) {
+          this.resetUserMode()
+        }
+      })
   }
 
   loadUserMode (maxXyz) {

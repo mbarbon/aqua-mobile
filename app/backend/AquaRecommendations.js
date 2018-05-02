@@ -7,6 +7,15 @@ import type { Anime, Rating } from './types'
 type ResolveRatings = (Array<Rating>) => void
 type RejectRatings = any => void
 
+class MALRatingsRetriesExceeded extends Error {
+  static retriesExceeded = true
+  constructor (message) {
+    super(message)
+    this.constructor = MALRatingsRetriesExceeded
+    this.__proto__ = MALRatingsRetriesExceeded.prototype
+  }
+}
+
 function fetchRatings (username: string): Promise<Array<Rating>> {
   let headers = new Headers()
 
@@ -36,7 +45,9 @@ function fetchRatingsUntil (
               executor(resolve, reject, remainingRetries - 1)
             }, delay)
           } else {
-            reject('Maximum number of retries expired')
+            reject(
+              new MALRatingsRetriesExceeded('Maximum number of retries expired')
+            )
           }
         } else {
           resolve(maybeRatings)
@@ -129,9 +140,7 @@ export default class AquaRecommendations {
     if (this.malUsername == null) {
       throw new Error('Need an username when calling loadMalAnimeList')
     }
-    return fetchRatingsUntil(this.malUsername, 5, 10000).catch(error => {
-      console.error(error)
-    })
+    return fetchRatingsUntil(this.malUsername, 5, 10000)
   }
 
   loadMalRecommendations (animeList: Array<Rating>): Promise<null> {
